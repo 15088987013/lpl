@@ -1,0 +1,32 @@
+
+
+java:S11922"FDefine a constant instead of duplicating this literal "pname" 5 times.(•ĞÕ(J$234eaf0a-3462-40f0-9ce6-d3b46056f7db
+‡
+java:S11923"FDefine a constant instead of duplicating this literal "phone" 5 times.(¼ÛçÅÿÿÿÿÿJ$f2da6530-60d1-4fc1-903a-888c70636d24
+¡
+java:S4144§"_Update this method so that its implementation is not identical to "findAllPlayers" on line 117.(¥µ‘ûÿÿÿÿJ$938c8570-84a2-49ab-9639-03c388d300cf
+‰	java:S100/"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸Ã¯¼J$c5273581-aa8f-4f6b-bf07-12cafd6b583f
+³
+java:S1130/"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(¸Ã¯¼J$270a10bd-f3d8-4df4-9d9f-21f005abd2b1
+‰	java:S100J"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„öÇ¸J$c89dc500-342c-43a7-a247-3b4bb2ad076b
+³
+java:S1130J"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(„öÇ¸J$2f8bca78-ed0f-474b-8e5e-2a9e0618766a
+³
+java:S1130d"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(ü€J$a312a031-fadb-4e39-8f8f-3a0ea74f55c0
+³
+java:S1130u"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(Âİ†¾J$2cefcb29-94eb-427a-ada8-cc38c34af03e
+¹
+java:S1130"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(ï¼øÇûÿÿÿÿJ$5f35fdf5-0a33-4590-b12d-27abf424c20b
+y
+java:S1854—"7Remove this useless assignment to local variable "pid".(ÖàòúüÿÿÿÿJ$7cd3f2a4-eebb-46a7-adb4-407f5bf5bb7f
+´
+java:S1130•"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(é¨Ò‡J$075b55b0-7242-42f2-aea4-1bac87ab347f
+j
+java:S1481—"(Remove this unused "pid" local variable.(ÖàòúüÿÿÿÿJ$9bd64fe4-40d2-4fe8-8cf4-99600c9655ed
+	java:S100§"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥µ‘ûÿÿÿÿJ$f9775fe7-0204-4973-9ff4-7937acd19f92
+¹
+java:S1130§"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(¥µ‘ûÿÿÿÿJ$1f5a3239-f5cb-4dd3-8a3a-5bc4c1f2c11f
+p
+java:S1128"4Remove this unused import 'com.lplsystem.pojo.Team'.(‡Ö¤ĞJ$68aa07dd-81a6-4cfd-9fad-134144c33589
+”
+java:S2226"XRemove this misleading mutable servlet instance field or make it "static" and/or "final"(ô¿ß½J$340f438c-cd08-4990-adf7-1b55c4713e8a

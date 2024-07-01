@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+  <script type="text/javascript">
+    var totalPageCount
+    var page
+    $(function (){
+      //第一次加载页面是请求一次后端
+      pageutil(1)
+      //页面加载后，对超链接绑定单击事件：
+      //首页
+      $("#first").click(function(){
+        pageutil(1)
+      })
+      //尾页
+      $("#last").click(function(){
+        pageutil(totalPageCount)
+      })
+      //上一页
+      $("#pre").click(function(){
+        if(page>1){
+          pageutil(page-1)
+        }else{
+         alert("当前已是第一页")
+        }
+      })
+      //下页
+      $("#next").click(function(){
+        if(page<totalPageCount){
+          pageutil(page+1)
+        }else{
+          alert("当前已是最后一页")
+        }
+      })
+
+    })
+
+    function pageutil(index){
+      //页面加载后，发送ajax请求
+      $.post("/lplsystem/serve/TeamServlet","method=findAllTeams_page&page="+index,function (result){
+        // 获取后端响应的一共多少页码
+        totalPageCount = result.totalPageCount;
+        page=index;
+        // 对tbody进行清空
+        $("#tbody").empty()
+        // 再遍历
+        $.each(result.list,function (i,e){
+          $("#tbody") .append('        <tr>\n' +
+                  '          <td style="text-align:left; padding-left:20px;">'+e.tid+'</td>\n' +
+                  '          <td>'+e.tname+'</td>\n' +
+                  '          <td>'+e.tlocation+'</td>\n' +
+                  '          <td>'+e.desc+'</td>\n' +
+                  '          <td><div class="button-group"> <a class="button border-main" href="/lplsystem/serve/TeamServlet?method=findOneTeam&tid='+e.tid+'"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="javascript:void(0)" onclick="return del('+e.tid+')"><span class="icon-trash-o"></span> 删除</a> </div></td>\n' +
+                  '        </tr>')
+        })
+        $("#pagefont").empty()
+        // 遍历数组：
+        $.each(result.pageNums,function (i,e){
+          $("#pagefont").append(' <a href="javascript:void(0)" id="page'+e+'" onclick="pageutil('+e+')">'+e+'</a> ')
+        })
+        //当前页码高亮
+        $("#page"+page).css("background","#44A3FF")
+      },"json")
+    }
+
+  </script>
+
+
+</head>
+<body>
+<form method="post" action="" id="listform">
+  <div class="panel admin-panel">
+    <div class="panel-head"><strong class="icon-reorder"> 战队列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+    <table class="table table-hover text-center">
+      <tr>
+        <th width="100" style="text-align:left; padding-left:20px;">ID</th>
+        <th width="10%">战队名称</th>
+        <th>战队位置</th>
+        <th>战队描述</th>
+      </tr>
+
+        <tbody id="tbody"></tbody>
+
+      <tr>
+        <td colspan="8">
+          <div class="pagelist">
+            <a href="javascript:void(0)" id="first">首页</a>
+            <a href="javascript:void(0)" id="pre">上一页</a>
+            <font  id="pagefont"></font>
+            <a href="javascript:void(0)" id="next">下一页</a>
+            <a href="javascript:void(0)" id="last">尾页</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</form>
+<script type="text/javascript">
+
+//搜索
+function changesearch(){	
+		
+}
+
+//单个删除
+function del(tid){
+  //弹出确定框
+  if(confirm("您确定要删除吗?")){
+    //删除
+    //发送ajax请求，根据tid删除数据
+    $.post("/lplsystem/serve/TeamServlet",{method:"deleteTeamByTid",tid:tid},function (result){
+      if(result>0){
+       pageutil(page)
+      }
+    })
+  }else{
+    alert("删除失败！")
+  }
+}
+
+//全选
+$("#checkall").click(function(){ 
+  $("input[name='id[]']").each(function(){
+	  if (this.checked) {
+		  this.checked = false;
+	  }
+	  else {
+		  this.checked = true;
+	  }
+  });
+})
+
+//批量删除
+function DelSelect(){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
+	});
+	if (Checkbox){
+		var t=confirm("您确认要删除选中的内容吗？");
+		if (t==false) return false;		
+		$("#listform").submit();		
+	}
+	else{
+		alert("请选择您要删除的内容!");
+		return false;
+	}
+}
+
+//批量排序
+function sorts(){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
+	});
+	if (Checkbox){	
+		
+		$("#listform").submit();		
+	}
+	else{
+		alert("请选择要操作的内容!");
+		return false;
+	}
+}
+
+
+//批量首页显示
+function changeishome(o){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
+	});
+	if (Checkbox){
+		
+		$("#listform").submit();	
+	}
+	else{
+		alert("请选择要操作的内容!");		
+	
+		return false;
+	}
+}
+
+//批量推荐
+function changeisvouch(o){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
+	});
+	if (Checkbox){
+		
+		
+		$("#listform").submit();	
+	}
+	else{
+		alert("请选择要操作的内容!");	
+		
+		return false;
+	}
+}
+
+//批量置顶
+function changeistop(o){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
+	});
+	if (Checkbox){		
+		
+		$("#listform").submit();	
+	}
+	else{
+		alert("请选择要操作的内容!");		
+	
+		return false;
+	}
+}
+
+
+//批量移动
+function changecate(o){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
+	});
+	if (Checkbox){		
+		
+		$("#listform").submit();		
+	}
+	else{
+		alert("请选择要操作的内容!");
+		
+		return false;
+	}
+}
+
+//批量复制
+function changecopy(o){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
+	});
+	if (Checkbox){	
+		var i = 0;
+	    $("input[name='id[]']").each(function(){
+	  		if (this.checked==true) {
+				i++;
+			}		
+	    });
+		if(i>1){ 
+	    	alert("只能选择一条信息!");
+			$(o).find("option:first").prop("selected","selected");
+		}else{
+		
+			$("#listform").submit();		
+		}	
+	}
+	else{
+		alert("请选择要复制的内容!");
+		$(o).find("option:first").prop("selected","selected");
+		return false;
+	}
+}
+
+</script>
+</body>
+</html>
